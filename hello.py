@@ -1,2 +1,2 @@
-# git test commit
-print("I LOVE /.../")
+def hello():
+    print('hello Mihail')
