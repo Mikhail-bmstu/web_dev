@@ -10,8 +10,6 @@ class Project(models.Model):
         return self.name
     
 class Task(models.Model):
-    
-    # Кортеж из возможных статусов задачи
     STATUS_CHOICES = [
         ('New', 'Новая'),
         ('In_progress', 'В работе'),
@@ -35,7 +33,6 @@ class Task(models.Model):
         blank=True
     )
     
-    # новое поле статуса задачи
     status = models.CharField(
         max_length=50,
         choices=STATUS_CHOICES,
