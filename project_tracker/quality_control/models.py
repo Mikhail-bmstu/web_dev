@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import tasks
-import tasks.models
+from tasks.models import Project, Task
 
 class BugReport(models.Model):
     STATUS_CHOICES = [
@@ -14,12 +14,12 @@ class BugReport(models.Model):
     description = models.TextField()
 
     project = models.ForeignKey(
-        tasks.models.Project,
+        Project,
         related_name='bugs',
         on_delete=models.CASCADE
     ) 
     task = models.ForeignKey(
-        tasks.models.Task,
+        Task,
         related_name='bugs',
         on_delete=models.SET_NULL,
         null=True,
@@ -54,12 +54,12 @@ class FeatureRequest(models.Model):
     description = models.TextField()
 
     project = models.ForeignKey(
-        tasks.models.Project,
+        Project,
         related_name='freqs',
         on_delete=models.CASCADE
     ) 
     task = models.ForeignKey(
-        tasks.models.Task,
+        Task,
         related_name='freqs',
         on_delete=models.SET_NULL,
         null=True,
