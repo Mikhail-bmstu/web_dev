@@ -2,6 +2,9 @@
 
 {% block content %}
     <h1>{{ bug.title }}</h1>
+    <p><a href="{% url 'quality_control:update_bug' bug.id %}">Изменить отчет об ошибке</a></p>
+    <p><a href="{% url 'quality_control:delete_bug' bug.id %}" onclick="return confirm('Вы уверены, что хотите удалить этот отчет об ошибке?');">Удалить отчет об ошибке</a></p>
+
     <p>{{ bug.description }}</p>
     <p>status: {{ bug.status }}, priority: {{ bug.priority }}</p>
     <p>project: {{ bug.project.name }}</p> <p>task: {{ bug.task.name }}</p>
