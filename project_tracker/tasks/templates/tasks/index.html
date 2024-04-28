@@ -1,0 +1,7 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+        <h1>Страница приложения tasks</h1>
+        <li><a href="{% url 'tasks:projects_list' %}">Список проектов</a></li>
+        <li><a href="{% url 'quality_control:index' %}">Перейти на страницу контроля качества</a></li>
+{% endblock %}
