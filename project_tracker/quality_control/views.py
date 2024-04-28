@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from .models import BugReport, FeatureRequest
 from django.template.loader import render_to_string
+from .forms import BugReportForm, FeatureRequestForm
 
 # def index(request):
 #     template = render_to_string('quality_control/index.html')
@@ -53,3 +54,23 @@ class FeatureDetailView(DetailView):
     pk_url_kwarg = 'feature_id'
     context_object_name = 'feature'
     template_name = 'quality_control/feature_detail.html'
+
+def add_bug(request):
+    if request.method == 'POST':
+        form = BugReportForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:bug_list')
+    else:
+        form = BugReportForm()
+    return render(request, 'quality_control/bug_report_form.html', {'form': form})
+
+def add_feature(request):
+    if request.method == 'POST':
+        form = FeatureRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:feature_list')
+    else:
+        form = FeatureRequestForm()
+    return render(request, 'quality_control/feature_request_form.html', {'form': form})
