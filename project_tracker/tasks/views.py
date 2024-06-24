@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from .models import Project, Task
 from django.template.loader import render_to_string
 from .forms import ProjectForm, TaskForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 def index(request):
     template = render_to_string('tasks/index.html')
@@ -98,13 +99,15 @@ class TaskDetailView(DetailView):
     pk_url_kwarg = 'task_id'
     template_name = 'tasks/task_detail.html'
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'tasks.add_project'
     model = Project
     form_class = ProjectForm
     template_name = 'tasks/project_create.html'
     success_url = reverse_lazy('tasks:projects_list')
 
-class TaskCreateView(CreateView):
+class TaskCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'tasks.add_task'
     model = Task
     form_class = TaskForm
     template_name = 'tasks/add_task.html'
@@ -116,14 +119,16 @@ class TaskCreateView(CreateView):
     def get_success_url(self):
         return reverse('tasks:project_detail', kwargs={'project_id': self.kwargs['project_id']})
     
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'tasks.change_project'
     model = Project
     form_class = ProjectForm
     template_name = 'tasks/project_update.html'
     pk_url_kwarg = 'project_id'
     success_url = reverse_lazy('tasks:projects_list')
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'tasks.change_task'
     model = Task
     form_class = TaskForm
     template_name = 'tasks/task_update.html'
@@ -132,13 +137,15 @@ class TaskUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('tasks:task_detail', kwargs={'project_id': self.object.project.id, 'task_id': self.object.id})
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'tasks.delete_project'
     model = Project
     pk_url_kwarg = 'project_id'
     success_url = reverse_lazy('tasks:projects_list')
     template_name = 'tasks/project_confirm_delete.html'
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'tasks.delete_task'
     model = Task
     pk_url_kwarg = 'task_id'
 

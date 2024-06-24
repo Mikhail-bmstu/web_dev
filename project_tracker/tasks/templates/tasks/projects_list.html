@@ -2,7 +2,11 @@
 
 {% block content %}
     <h1>Список проектов</h1>
+    <!--<p>{{ perms.tasks }}</p> -->
+
+    {% if perms.tasks.add_project %}
     <p><a href="{% url 'tasks:create_project' %}">Создать новый проект</a></p>
+    {% endif %}
     <ul>
         {% for project in project_list %}
             <li><a href="{% url 'tasks:project_detail' project.id %}">{{ project.name }}</a></li>

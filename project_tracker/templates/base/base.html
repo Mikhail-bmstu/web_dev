@@ -7,11 +7,26 @@
 </head>
 <body>
     <header>
-        <!-- Общий заголовок для всех страниц -->
+        <!-- Общий заголовок для всех страниц --> 
         <h1>Проект project-tracker</h1>
     </header>
     {% include 'base/nav.html' only with param='Django' %}
     <main>
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}"> Профиль {{ user.username }} (изм)</a>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+          </form>
+        {% else %}
+        <form action="{% url 'login' %}">
+            <button type="submit">Login</button>
+        </form>
+        <form action="{% url 'register' %}">
+            <button type="submit">Register</button>
+        </form>
+        {% endif %}
         {% block content %}
         <!-- Основное содержимое страницы -->
         {% endblock %}

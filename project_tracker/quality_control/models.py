@@ -23,7 +23,7 @@ class BugReport(models.Model):
         related_name='bugs',
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
     )
     status = models.CharField(
         max_length=50,

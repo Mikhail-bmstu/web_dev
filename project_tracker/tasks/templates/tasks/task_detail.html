@@ -1,12 +1,16 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-
+    {% if perms.tasks.change_task %}
+    <!-- Кнопка изменения задачи -->
     <a href="{% url 'tasks:update_task' project_id=task.project.id task_id=task.id %}">Изменить задачу</a>
+    {% endif %}
 
+    {% if perms.tasks.delete_task %}
     <!-- Кнопка удаления задачи -->
     <p><a href="{% url 'tasks:delete_task' project_id=task.project.id task_id=task.id %}" onclick="return confirm('Вы уверены, что хотите удалить эту задачу?');">Удалить задачу</a></p>
-
+    {% endif %}
+    
     <h1>{{ task.name }}</h1>
     <p>{{ task.description }}</p>
 

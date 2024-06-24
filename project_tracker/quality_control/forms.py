@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from .models import BugReport, FeatureRequest
+from tasks.models import Project, Task
 
 class BugReportForm(ModelForm):
     class Meta:
@@ -10,3 +11,4 @@ class FeatureRequestForm(ModelForm):
     class Meta:
         model = FeatureRequest
         fields = ['title', 'description', 'status', 'priority', 'project', 'task']
+    
